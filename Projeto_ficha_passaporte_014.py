@@ -231,6 +231,7 @@ from tkinter import messagebox, PhotoImage
 from openpyxl import load_workbook
 import os
 
+
 def clear_form(ws):
     # Limpar campos específicos
     ws['C6'] = ''
@@ -239,10 +240,10 @@ def clear_form(ws):
     ws['M7'] = ''
     ws['C8'] = ''
 
-    #Gêmos
+    # Gêmeos
     ws['O9'] = 'Sim( )'
     ws['P9'] = 'Não( )'
-    
+
     # Limpar cor/raça
     ws['G8'] = '( )'
     ws['I8'] = '( )'
@@ -250,44 +251,44 @@ def clear_form(ws):
     ws['M8'] = '( )'
     ws['O8'] = '( )'
     ws['Q8'] = '( )'
-    
+
     ws['G9'] = ''
     ws['C9'] = ''
     ws['C10'] = ''
     ws['G10'] = ''
     ws['O10'] = ''
     ws['Q10'] = ''
-    
+
     ws['J14'] = ''
     ws['K13'] = '( )'
     ws['Q13'] = '( )'
-    
+
     ws['B19'] = ''
     ws['O19'] = ''
     ws['C20'] = ''
     ws['M20'] = '( )'
     ws['O20'] = '( )'
-    
+
     ws['B21'] = ''
     ws['F21'] = ''
     ws['M21'] = ''
     ws['F22'] = ''
     ws['M22'] = ''
-    
+
     ws['I25'] = '( )'
     ws['K25'] = '( )'
     ws['M25'] = '( )'
     ws['O25'] = '( )'
     ws['Q25'] = '( )'
-    
+
     ws['I26'] = '( )'
     ws['K26'] = '( )'
     ws['M26'] = '( )'
     ws['O26'] = '( )'
-    
+
     ws['J30'] = '( )'
     ws['L30'] = '( )'
-    
+
     ws['K15'] = '( )'
     ws['M15'] = '( )'
     ws['M16'] = '( )'
@@ -302,7 +303,7 @@ def clear_form(ws):
     ws['I37'] = '( )'
     ws['I38'] = '( )'
 
-    #limpar campos de documentos entregues
+    # Limpar campos de documentos entregues
     ws['A40'] = '( )'
     ws['A41'] = '( )'
     ws['A42'] = '( )'
@@ -318,7 +319,7 @@ def clear_form(ws):
     ws['M41'] = '( )'
     ws['M42'] = '( )'
     ws['A45'] = '( )'
-    
+
 def populate_form(form_data):
     # Carregar a planilha Excel
     wb = load_workbook('FICHA_DE_MATRÍCULA_2024.xlsx')
@@ -341,15 +342,14 @@ def populate_form(form_data):
     ws['M8'] = '(X)' if cor_raca == 'Amarelo' else '( )'
     ws['O8'] = '(X)' if cor_raca == 'Indígena' else '( )'
     ws['Q8'] = '(X)' if cor_raca == 'Outra' else '( )'
-    
+
     # Outras informações do formulário
     ws['G9'] = form_data.get('Nome da Mãe', '')
-   
-    #Gêmeo
+
+    # Gêmeo
     gemeo_sim = form_data.get('Gêmeo', '( )')
-    
-    ws['O9'] = '(x)sim' if gemeo_sim == "Sim" else '( )'
-    ws['P9'] = '(x)não' if gemeo_sim == "Não" else '( )'
+    ws['O9'] = '(X)Sim' if gemeo_sim == "Sim" else '( )'
+    ws['P9'] = '(X)Não' if gemeo_sim == "Não" else '( )'
 
     ws['C10'] = form_data.get('Nascimento', '')
     ws['G10'] = form_data.get('Município', '')
@@ -362,16 +362,14 @@ def populate_form(form_data):
         ws['Q13'] = '( )'
     else:
         ws['Q13'] = '(X)'
-        ws['k13'] = '( )'
-    
+        ws['K13'] = '( )'
+
     # Outros campos preenchidos
     ws['B19'] = form_data.get('Endereço', '')
     ws['O19'] = form_data.get('Número', '')
     ws['C20'] = form_data.get('Bairro', '')
-    
+
     # Zona Urbana ou Rural
-  # Preencher as células com base nos dados do formulário
-# Zona Urbana ou Rural
     if form_data.get('Urbana/Rural') == 'Urbana':
         ws['M20'] = '( X )'
         ws['O20'] = '(  )'
@@ -381,7 +379,6 @@ def populate_form(form_data):
     else:
         ws['M20'] = '(  )'
         ws['O20'] = '(  )'
-
 
     ws['B21'] = form_data.get('CEP', '')
     ws['F21'] = form_data.get('Cidade', '')
@@ -441,277 +438,379 @@ def populate_form(form_data):
 
     # Necessidade Especial
     ws['J14'] = form_data.get('Se sim, qual', '')
-# Preencher os campos de documentos entregues
 
+    # Preencher os campos de documentos entregues
     if form_data['Doc_RG']:
         ws['A40'] = '(X)'
     if form_data['Doc_CPF']:
         ws['A41'] = '(X)'
     if form_data['Foto']:
         ws['A42'] = '(X)'
-    if form_data['Requerimento de Dispensa de Ed. Física']:
+    if form_data['Requerimento de Matrícula']:
         ws['A43'] = '(X)'
-    if form_data['Histórico Escolar EF']:
+    if form_data['Histórico Escolar']:
         ws['D40'] = '(X)'
-    if form_data['Histórico Escolar EM']:
+    if form_data['Comprovante de Endereço']:
         ws['D41'] = '(X)'
-    if form_data['Comprovante de Residência']:
-        ws['D42'] = '(X)'
-    if form_data['Outros']:
-        ws['D43'] = '(X)'
-    if form_data['Certidão de Nascimento/Casamento']:
-        ws['I40'] = '(X)'
-    if form_data['Reservista']:
-        ws['I41'] = '(X)'
-    if form_data['Título de Eleitor/TRE']:
-        ws['I42'] = '(X)'
     if form_data['Carteira de Vacinação']:
-        ws['M40'] = '(X)' 
-    if form_data['Atestado de Eliminação de Disciplinas']:
-        ws['M41'] = '(X)'
+        ws['D42'] = '(X)'
+    if form_data['Certidão de Nascimento']:
+        ws['D43'] = '(X)'
+    if form_data['Ficha de Aproveitamento de Estudos']:
+        ws['I40'] = '(X)'
+    if form_data['Relatório Médico']:
+        ws['I41'] = '(X)'
     if form_data['Declaração de Transferência']:
+        ws['I42'] = '(X)'
+    if form_data['Requerimento de Transferência']:
+        ws['M40'] = '(X)'
+    if form_data['Declaração de Matrícula']:
+        ws['M41'] = '(X)'
+    if form_data['Boletim Escolar']:
         ws['M42'] = '(X)'
+    if form_data['Certificado de Conclusão']:
+        ws['A45'] = '(X)'
 
-        # Salvar o arquivo Excel
+    # Salvar a planilha Excel
     wb.save('FICHA_DE_MATRÍCULA_2024.xlsx')
     messagebox.showinfo("Sucesso", "Ficha de matrícula preenchida com sucesso!")
-def show_form():
-    def submit_form():
-    # Coletar os dados do formulário
-        form_data = {
-            "Nome": nome_entry.get(),
-            "RG": rg_entry.get(),
-            "CPF": cpf_entry.get(),
-            "RA": ra_entry.get(),
-            "Estado Civil": estado_civil_entry.get(),
-            "Cor/raça": cor_raca_var.get(),
-            "Nome da Mãe": nome_mae_entry.get(),
-            "Gêmeo" : gemeo_sim_var.get(),
-            "Nascimento": nascimento_entry.get(),
-            "Município": municipio_entry.get(),
-            "UF": uf_entry.get(),
-            "País": pais_entry.get(),
-            "Opção de Itinerário": itinerario_var.get(),
-            "Endereço": endereco_entry.get(),
-            "Número": numero_entry.get(),
-            "Bairro": bairro_entry.get(),
-            "Urbana/Rural": zona_var.get(),
-            "CEP": cep_entry.get(),
-            "Cidade": cidade_entry.get(),
-            "UF_Cidade": uf_cidade_entry.get(),
-            "Telefone Celular": celular_entry.get(),
-            "Telefone Recado": recado_entry.get(),
-            "Requer Matrícula no": nivel_ensino_var.get(),
-            "Termo/Série": termo_serie_var.get(),
-            "Ensino Religioso": religio_var.get(),
-            "Estudou nesta U.E.": estudou_var.get(),
-            "Aproveitamento de Estudos": aproveitamento_var.get(),
-            "Portador de necessidades ou PCD": pcd_var.get(),
-            "Se sim, qual?": qual_pcd_entry.get(),
-            'Doc_RG': Doc_RG_var.get(),  
-            'Doc_CPF': Doc_CPF_var.get(),  
-            'Foto': foto_var.get(),
-            'Requerimento de Dispensa de Ed. Física': req_disp_var.get(), 
-            'Histórico Escolar EF': historico_ef_var.get(), 
-            'Histórico Escolar EM': historico_em_var.get(),  
-            'Comprovante de Residência': comprovante_residencia_var.get(), 
-            'Outros': outros_var.get(), 
-            'Certidão de Nascimento/Casamento': cert_nasc_var.get(),  
-            'Reservista': reservista_var.get(),  
-            'Título de Eleitor/TRE': titulo_eleitor_var.get(),  
-            'Carteira de Vacinação': vacina_var.get(),  
-            'Atestado de Eliminação de Disciplinas': atest_elim_var.get(), 
-            'Declaração de Transferência': declaracao_transf_var.get(),  
-     }
 
-        print("Form Data:", form_data)  # Verifique os valores aqui
+# Função para lidar com o clique do botão "Enviar"
     
-        populate_form(form_data)
-    
-    # Criação da janela do formulário
-    root = tk.Tk()
-    root.title("Formulário de Matrícula")
-    
-    # Criação dos campos do formulário
-    tk.Label(root, text="Nome").grid(row=0, column=0)
-    nome_entry = tk.Entry(root)
-    nome_entry.grid(row=0, column=1)
+def enviar():
+    # Obter os dados do formulário
+    form_data = {
+        'Nome': nome_entry.get(),
+        'RG': rg_entry.get(),
+        'CPF': cpf_entry.get(),
+        'RA': ra_entry.get(),
+        'Estado Civil': estado_civil_entry.get(),
+        'Cor/raça': cor_var.get(),
+        'Nome da Mãe': nome_mae_entry.get(),
+        'Gêmeo': gemeo_var.get(),
+        'Nascimento': nascimento_entry.get(),
+        'Município': municipio_entry.get(),
+        'UF': uf_entry.get(),
+        'País': pais_entry.get(),
+        'Opção de Itinerário': itinerario_var.get(),
+        'Endereço': endereco_entry.get(),
+        'Número': numero_entry.get(),
+        'Bairro': bairro_entry.get(),
+        'Urbana/Rural': zona_var.get(),
+        'CEP': cep_entry.get(),
+        'Cidade': cidade_entry.get(),
+        'UF_Cidade': uf_cidade_entry.get(),
+        'Telefone Celular': telefone_celular_entry.get(),
+        'Telefone Recado': telefone_recado_entry.get(),
+        'Requer Matrícula no': nivel_var.get(),
+        'Termo/Série': serie_var.get(),
+        'Ensino Religioso': ensino_religioso_var.get(),
+        'Estudou nesta U.E.': estudou_ue_var.get(),
+        'Aproveitamento de Estudos': aproveitamento_var.get(),
+        'Portador de necessidades ou PCD': necessidades_var.get(),
+        'Se sim, qual': necessidade_qual_entry.get(),
+        'Doc_RG': doc_rg_var.get(),
+        'Doc_CPF': doc_cpf_var.get(),
+        'Foto': doc_foto_var.get(),
+        'Requerimento de Matrícula': doc_requerimento_var.get(),
+        'Histórico Escolar': doc_historico_var.get(),
+        'Comprovante de Endereço': doc_comprovante_var.get(),
+        'Carteira de Vacinação': doc_vacinacao_var.get(),
+        'Certidão de Nascimento': doc_certidao_var.get(),
+        'Ficha de Aproveitamento de Estudos': doc_aproveitamento_var.get(),
+        'Relatório Médico': doc_relatorio_var.get(),
+        'Declaração de Transferência': doc_transferencia_var.get(),
+        'Requerimento de Transferência': doc_req_transferencia_var.get(),
+        'Declaração de Matrícula': doc_decl_matricula_var.get(),
+        'Boletim Escolar': doc_boletim_var.get(),
+        'Certificado de Conclusão': doc_certificado_var.get()
+    }
 
-    tk.Label(root, text="RG").grid(row=1, column=0)
-    rg_entry = tk.Entry(root)
-    rg_entry.grid(row=1, column=1)
+    # Chamar a função para preencher o formulário na planilha Excel
+    populate_form(form_data)
 
-    tk.Label(root, text="CPF").grid(row=2, column=0)
-    cpf_entry = tk.Entry(root)
-    cpf_entry.grid(row=2, column=1)
+    # Exibir uma mensagem de sucesso
+    messagebox.showinfo("Sucesso", "Ficha preenchida com sucesso!")
 
-    tk.Label(root, text="RA").grid(row=3, column=0)
-    ra_entry = tk.Entry(root)
-    ra_entry.grid(row=3, column=1)
+# Criar a interface gráfica do formulário
+root = tk.Tk()
+root.title("Formulário de Matrícula")
 
-    tk.Label(root, text="Estado Civil").grid(row=4, column=0)
-    estado_civil_entry = tk.Entry(root)
-    estado_civil_entry.grid(row=4, column=1)
-    
-    tk.Label(root, text="Cor/raça").grid(row=5, column=0)
-    cor_raca_var = tk.StringVar(value='Branco')
-    cor_raca_menu = tk.OptionMenu(root, cor_raca_var, 'Branco', 'Preto', 'Pardo', 'Amarelo', 'Indígena', 'Outra')
-    cor_raca_menu.grid(row=5, column=1)
-    
-    tk.Label(root, text="Nome da Mãe").grid(row=6, column=0)
-    nome_mae_entry = tk.Entry(root)
-    nome_mae_entry.grid(row=6, column=1)
-    
-    tk.Label(root, text="Gêmeo").grid(row=7, column=0)
-    gemeo_sim_var = tk.StringVar(value='Sim')
-    gemeo_menu = tk.OptionMenu(root, gemeo_sim_var, 'Sim', 'Não')
-    gemeo_menu.grid(row=7, column=1)
-    
-    tk.Label(root, text="Nascimento").grid(row=8, column=0)
-    nascimento_entry = tk.Entry(root)
-    nascimento_entry.grid(row=8, column=1)
-    
-    tk.Label(root, text="Município").grid(row=9, column=0)
-    municipio_entry = tk.Entry(root)
-    municipio_entry.grid(row=9, column=1)
-    
-    tk.Label(root, text="UF").grid(row=10, column=0)
-    uf_entry = tk.Entry(root)
-    uf_entry.grid(row=10, column=1)
-    
-    tk.Label(root, text="País").grid(row=11, column=0)
-    pais_entry = tk.Entry(root)
-    pais_entry.grid(row=11, column=1)
-    
-    tk.Label(root, text="Opção de Itinerário").grid(row=12, column=0)
-    itinerario_var = tk.StringVar(value='Ciências Naturais/Matemática')
-    itinerario_menu = tk.OptionMenu(root, itinerario_var, 'Ciências Naturais/Matemática', 'Linguagens e Ciências Humanas')
-    itinerario_menu.grid(row=12, column=1)
-    
-    tk.Label(root, text="Endereço").grid(row=13, column=0)
-    endereco_entry = tk.Entry(root)
-    endereco_entry.grid(row=13, column=1)
-    
-    tk.Label(root, text="Número").grid(row=14, column=0)
-    numero_entry = tk.Entry(root)
-    numero_entry.grid(row=14, column=1)
-    
-    tk.Label(root, text="Bairro").grid(row=15, column=0)
-    bairro_entry = tk.Entry(root)
-    bairro_entry.grid(row=15, column=1) 
+# Campos do formulário
+nome_label = tk.Label(root, text="Nome:")
+nome_label.grid(row=0, column=0)
+nome_entry = tk.Entry(root)
+nome_entry.grid(row=0, column=1)
 
-    zona_var = tk.StringVar(value='Urbana')
-    tk.Radiobutton(root, text="Urbana", variable=zona_var, value='Urbana').grid(row=16, column=1)
-    tk.Radiobutton(root, text="Rural", variable=zona_var, value='Rural').grid(row=16, column=2)
-    
-    tk.Label(root, text="CEP").grid(row=17, column=0)
-    cep_entry = tk.Entry(root)
-    cep_entry.grid(row=17, column=1)
-    
-    tk.Label(root, text="Cidade").grid(row=18, column=0)
-    cidade_entry = tk.Entry(root)
-    cidade_entry.grid(row=18, column=1)
-    
-    tk.Label(root, text="UF_Cidade").grid(row=19, column=0)
-    uf_cidade_entry = tk.Entry(root)
-    uf_cidade_entry.grid(row=19, column=1)
-    
-    tk.Label(root, text="Telefone Celular").grid(row=20, column=0)
-    celular_entry = tk.Entry(root)
-    celular_entry.grid(row=20, column=1)
-    
-    tk.Label(root, text="Telefone Recado").grid(row=21, column=0)
-    recado_entry = tk.Entry(root)
-    recado_entry.grid(row=21, column=1)
-    
-    # Adiciona campos para nível de ensino e série/termo
-    tk.Label(root, text="Requer Matrícula no").grid(row=22, column=0)
-    nivel_ensino_var = tk.StringVar()
-    tk.OptionMenu(root, nivel_ensino_var, "Ensino Fundamental", "Ensino Médio").grid(row=22, column=1)
+rg_label = tk.Label(root, text="RG:")
+rg_label.grid(row=1, column=0)
+rg_entry = tk.Entry(root)
+rg_entry.grid(row=1, column=1)
 
-    tk.Label(root, text="Termo/Série").grid(row=23, column=0)
-    termo_serie_var = tk.StringVar()
-    tk.OptionMenu(root, termo_serie_var, "1º Termo", "2º Termo", "3º Termo", "4º Termo", "1ª Série", "2ª Série", "3ª Série").grid(row=23, column=1)
-    tk.Label(root, text="Ensino Religioso").grid(row=24, column=0)
-    religio_var = tk.StringVar(value='Sim')
-    religio_menu = tk.OptionMenu(root, religio_var, 'Sim', 'Não')
-    religio_menu.grid(row=24, column=1)
-    
-    tk.Label(root, text="Estudou nesta U.E.").grid(row=25, column=0)
-    estudou_var = tk.StringVar(value='Sim')
-    estudou_menu = tk.OptionMenu(root, estudou_var, 'Sim', 'Não')
-    estudou_menu.grid(row=25, column=1)
-    
-    tk.Label(root, text="Aproveitamento de Estudos").grid(row=1, column=2)
-    aproveitamento_var = tk.StringVar(value='Sim')
-    aproveitamento_menu = tk.OptionMenu(root, aproveitamento_var, 'Sim', 'Não')
-    aproveitamento_menu.grid(row=1, column=3)
+cpf_label = tk.Label(root, text="CPF:")
+cpf_label.grid(row=2, column=0)
+cpf_entry = tk.Entry(root)
+cpf_entry.grid(row=2, column=1)
 
-    tk.Label(root, text="Portador de Necessidades Especiais?").grid(row=2, column=2)
-    pcd_var = tk.StringVar(value='Sim')
-    pcd_menu = tk.OptionMenu(root, pcd_var, 'Sim', 'Não')
-    pcd_menu.grid(row=2, column=3)
+ra_label = tk.Label(root, text="RA:")
+ra_label.grid(row=3, column=0)
+ra_entry = tk.Entry(root)
+ra_entry.grid(row=3, column=1)
 
-    tk.Label(root, text="Se sim, Qual?").grid(row=4, column=2)
-    qual_pcd_entry = tk.Entry(root)
-    qual_pcd_entry.grid(row=4, column=3)
+estado_civil_label = tk.Label(root, text="Estado Civil:")
+estado_civil_label.grid(row=4, column=0)
+estado_civil_entry = tk.Entry(root)
+estado_civil_entry.grid(row=4, column=1)
 
-    # Adicionando campos de documentos entregues
-    tk.Label(root, text="Documentos Entregues:").grid(row=5, column=2, sticky="w")
+cor_label = tk.Label(root, text="Cor/Raça:")
+cor_label.grid(row=5, column=0)
+cor_var = tk.StringVar(value="Branco")
+cor_options = ["Branco", "Preto", "Pardo", "Amarelo", "Indígena", "Outra"]
+cor_menu = tk.OptionMenu(root, cor_var, *cor_options)
+cor_menu.grid(row=5, column=1)
 
-    Doc_RG_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Doc RG", variable=Doc_RG_var).grid(row=6, column=3, sticky="w")
+nome_mae_label = tk.Label(root, text="Nome da Mãe:")
+nome_mae_label.grid(row=6, column=0)
+nome_mae_entry = tk.Entry(root)
+nome_mae_entry.grid(row=6, column=1)
 
-    Doc_CPF_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Doc CPF", variable=Doc_CPF_var).grid(row=7, column=3, sticky="w")
+gemeo_label = tk.Label(root, text="Gêmeo:")
+gemeo_label.grid(row=7, column=0)
+gemeo_var = tk.StringVar(value="Não")
+gemeo_sim = tk.Radiobutton(root, text="Sim", variable=gemeo_var, value="Sim")
+gemeo_sim.grid(row=7, column=1)
+gemeo_nao = tk.Radiobutton(root, text="Não", variable=gemeo_var, value="Não")
+gemeo_nao.grid(row=7, column=2)
 
-    foto_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Foto", variable=foto_var).grid(row=8, column=4, sticky="w")
+nascimento_label = tk.Label(root, text="Nascimento:")
+nascimento_label.grid(row=8, column=0)
+nascimento_entry = tk.Entry(root)
+nascimento_entry.grid(row=8, column=1)
 
-    req_disp_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Requerimento de Dispensa de Ed. Física", variable=req_disp_var).grid(row=8, column=5, sticky="w")
+municipio_label = tk.Label(root, text="Município:")
+municipio_label.grid(row=9, column=0)
+municipio_entry = tk.Entry(root)
+municipio_entry.grid(row=9, column=1)
 
-    historico_ef_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Histórico Escolar EF", variable=historico_ef_var).grid(row=9, column=3, sticky="w")
+uf_label = tk.Label(root, text="UF:")
+uf_label.grid(row=10, column=0)
+uf_entry = tk.Entry(root)
+uf_entry.grid(row=10, column=1)
 
-    historico_em_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Histórico Escolar EM", variable=historico_em_var).grid(row=9, column=4, sticky="w")
+pais_label = tk.Label(root, text="País:")
+pais_label.grid(row=11, column=0)
+pais_entry = tk.Entry(root)
+pais_entry.grid(row=11, column=1)
 
-    comprovante_residencia_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Comprovante de Residência", variable=comprovante_residencia_var).grid(row=9, column=5, sticky="w")
+itinerario_label = tk.Label(root, text="Opção de Itinerário:")
+itinerario_label.grid(row=12, column=0)
+itinerario_var = tk.StringVar(value="Ciências Naturais/Matemática")
+itinerario_options = ["Ciências Naturais/Matemática", "Linguagens/Sociais"]
+itinerario_menu = tk.OptionMenu(root, itinerario_var, *itinerario_options)
+itinerario_menu.grid(row=12, column=1)
 
-    outros_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Outros", variable=outros_var).grid(row=10, column=3, sticky="w")
+endereco_label = tk.Label(root, text="Endereço:")
+endereco_label.grid(row=13, column=0)
+endereco_entry = tk.Entry(root)
+endereco_entry.grid(row=13, column=1)
 
-    cert_nasc_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Certidão de Nascimento/Casamento", variable=cert_nasc_var).grid(row=10, column=4, sticky="w")
+numero_label = tk.Label(root, text="Número:")
+numero_label.grid(row=14, column=0)
+numero_entry = tk.Entry(root)
+numero_entry.grid(row=14, column=1)
 
-    reservista_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Reservista", variable=reservista_var).grid(row=10, column=5, sticky="w")
+bairro_label = tk.Label(root, text="Bairro:")
+bairro_label.grid(row=15, column=0)
+bairro_entry = tk.Entry(root)
+bairro_entry.grid(row=15, column=1)
 
-    titulo_eleitor_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Título de Eleitor/TRE", variable=titulo_eleitor_var).grid(row=11, column=3, sticky="w")
+zona_label = tk.Label(root, text="Zona Urbana/Rural:")
+zona_label.grid(row=16, column=0)
+zona_var = tk.StringVar(value="Urbana")
+zona_urbana = tk.Radiobutton(root, text="Urbana", variable=zona_var, value="Urbana")
+zona_urbana.grid(row=16, column=1)
+zona_rural = tk.Radiobutton(root, text="Rural", variable=zona_var, value="Rural")
+zona_rural.grid(row=16, column=2)
 
-    vacina_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Carteira de Vacinação", variable=vacina_var).grid(row=11, column=4, sticky="w")
+cep_label = tk.Label(root, text="CEP:")
+cep_label.grid(row=17, column=0)
+cep_entry = tk.Entry(root)
+cep_entry.grid(row=17, column=1)
 
-    atest_elim_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Atestado de Eliminação de Disciplinas", variable=atest_elim_var).grid(row=11, column=5, sticky="w")
+cidade_label = tk.Label(root, text="Cidade:")
+cidade_label.grid(row=18, column=0)
+cidade_entry = tk.Entry(root)
+cidade_entry.grid(row=18, column=1)
 
-    declaracao_transf_var = tk.BooleanVar()
-    tk.Checkbutton(root, text="Declaração de Transferência", variable=declaracao_transf_var).grid(row=11, column=3, sticky="w")
-                   
-    
-    # Botão de envio do formulário
-    tk.Button(root, text="Enviar", command=submit_form).grid(row=28, column=0, columnspan=2)
+uf_cidade_label = tk.Label(root, text="UF_Cidade:")
+uf_cidade_label.grid(row=19, column=0)
+uf_cidade_entry = tk.Entry(root)
+uf_cidade_entry.grid(row=19, column=1)
 
-    # Iniciar o loop principal da interface
-    root.mainloop()
+telefone_celular_label = tk.Label(root, text="Telefone Celular:")
+telefone_celular_label.grid(row=20, column=0)
+telefone_celular_entry = tk.Entry(root)
+telefone_celular_entry.grid(row=20, column=1)
+
+telefone_recado_label = tk.Label(root, text="Telefone Recado:")
+telefone_recado_label.grid(row=21, column=0)
+telefone_recado_entry = tk.Entry(root)
+telefone_recado_entry.grid(row=21, column=1)
+
+nivel_label = tk.Label(root, text="Requer Matrícula no:")
+nivel_label.grid(row=22, column=0)
+nivel_var = tk.StringVar(value="Ensino Fundamental")
+nivel_options = ["Ensino Fundamental", "Ensino Médio", "EJA"]
+nivel_menu = tk.OptionMenu(root, nivel_var, *nivel_options)
+nivel_menu.grid(row=22, column=1)
+
+serie_label = tk.Label(root, text="Termo/Série:")
+serie_label.grid(row=23, column=0)
+serie_var = tk.StringVar(value="1º Termo")
+serie_options = ["1º Termo", "2º Termo", "3º Termo", "4º Termo", "1ª Série", "2ª Série", "3ª Série", "4ª Série"]
+serie_menu = tk.OptionMenu(root, serie_var, *serie_options)
+serie_menu.grid(row=23, column=1)
+
+ensino_religioso_label = tk.Label(root, text="Ensino Religioso:")
+ensino_religioso_label.grid(row=24, column=0)
+ensino_religioso_var = tk.StringVar(value="Sim")
+ensino_religioso_sim = tk.Radiobutton(root, text="Sim", variable=ensino_religioso_var, value="Sim")
+ensino_religioso_sim.grid(row=24, column=1)
+ensino_religioso_nao = tk.Radiobutton(root, text="Não", variable=ensino_religioso_var, value="Não")
+ensino_religioso_nao.grid(row=24, column=2)
+
+estudou_ue_label = tk.Label(root, text="Estudou nesta U.E.:")
+estudou_ue_label.grid(row=25, column=0)
+estudou_ue_var = tk.StringVar(value="Sim")
+estudou_ue_sim = tk.Radiobutton(root, text="Sim", variable=estudou_ue_var, value="Sim")
+estudou_ue_sim.grid(row=25, column=1)
+estudou_ue_nao = tk.Radiobutton(root, text="Não", variable=estudou_ue_var, value="Não")
+estudou_ue_nao.grid(row=25, column=2)
+
+aproveitamento_label = tk.Label(root, text="Aproveitamento de Estudos:")
+aproveitamento_label.grid(row=26, column=0)
+aproveitamento_var = tk.StringVar(value="Sim")
+aproveitamento_sim = tk.Radiobutton(root, text="Sim", variable=aproveitamento_var, value="Sim")
+aproveitamento_sim.grid(row=26, column=1)
+aproveitamento_nao = tk.Radiobutton(root, text="Não", variable=aproveitamento_var, value="Não")
+aproveitamento_nao.grid(row=26, column=2)
+
+necessidades_label = tk.Label(root, text="Portador de necessidades ou PCD:")
+necessidades_label.grid(row=27, column=0)
+necessidades_var = tk.StringVar(value="Não")
+necessidades_sim = tk.Radiobutton(root, text="Sim", variable=necessidades_var, value="Sim")
+necessidades_sim.grid(row=27, column=1)
+necessidades_nao = tk.Radiobutton(root, text="Não", variable=necessidades_var, value="Não")
+necessidades_nao.grid(row=27, column=2)
+
+necessidade_qual_label = tk.Label(root, text="Se sim, qual:")
+necessidade_qual_label.grid(row=28, column=0)
+necessidade_qual_entry = tk.Entry(root)
+necessidade_qual_entry.grid(row=28, column=1)
+
+doc_rg_label = tk.Label(root, text="RG:")
+doc_rg_label.grid(row=1, column=2)
+doc_rg_var = tk.IntVar()
+doc_rg_check = tk.Checkbutton(root, variable=doc_rg_var)
+doc_rg_check.grid(row=1, column=3)
+
+doc_cpf_label = tk.Label(root, text="CPF:")
+doc_cpf_label.grid(row=2, column=2)
+doc_cpf_var = tk.IntVar()
+doc_cpf_check = tk.Checkbutton(root, variable=doc_cpf_var)
+doc_cpf_check.grid(row=2, column=3)
+
+doc_foto_label = tk.Label(root, text="Foto:")
+doc_foto_label.grid(row=3, column=2)
+doc_foto_var = tk.IntVar()
+doc_foto_check = tk.Checkbutton(root, variable=doc_foto_var)
+doc_foto_check.grid(row=3, column=3)
+
+doc_requerimento_label = tk.Label(root, text="Requerimento Disp. Ed, Física:")
+doc_requerimento_label.grid(row=4, column=2)
+doc_requerimento_var = tk.IntVar()
+doc_requerimento_check = tk.Checkbutton(root, variable=doc_requerimento_var)
+doc_requerimento_check.grid(row=4, column=3)
+
+doc_historico_label = tk.Label(root, text="Histórico Escolar Ensino Fundamental:")
+doc_historico_label.grid(row=5, column=2)
+doc_historico_var = tk.IntVar()
+doc_historico_check = tk.Checkbutton(root, variable=doc_historico_var)
+doc_historico_check.grid(row=5, column=3)
+
+doc_comprovante_label = tk.Label(root, text="Histórico Ensino Médio:")
+doc_comprovante_label.grid(row=6, column=2)
+doc_comprovante_var = tk.IntVar()
+doc_comprovante_check = tk.Checkbutton(root, variable=doc_comprovante_var)
+doc_comprovante_check.grid(row=6, column=3)
+
+doc_vacinacao_label = tk.Label(root, text="Comprovante de Residência:")
+doc_vacinacao_label.grid(row=7, column=2)
+doc_vacinacao_var = tk.IntVar()
+doc_vacinacao_check = tk.Checkbutton(root, variable=doc_vacinacao_var)
+doc_vacinacao_check.grid(row=7, column=3)
+
+doc_certidao_label = tk.Label(root, text="Outros:")
+doc_certidao_label.grid(row=8, column=2)
+doc_certidao_var = tk.IntVar()
+doc_certidao_check = tk.Checkbutton(root, variable=doc_certidao_var)
+doc_certidao_check.grid(row=8, column=3)
+
+doc_aproveitamento_label = tk.Label(root, text="Certidão de Nascimento:")
+doc_aproveitamento_label.grid(row=9, column=2)
+doc_aproveitamento_var = tk.IntVar()
+doc_aproveitamento_check = tk.Checkbutton(root, variable=doc_aproveitamento_var)
+doc_aproveitamento_check.grid(row=9, column=3)
+
+doc_relatorio_label = tk.Label(root, text="Reservista:")
+doc_relatorio_label.grid(row=10, column=2)
+doc_relatorio_var = tk.IntVar()
+doc_relatorio_check = tk.Checkbutton(root, variable=doc_relatorio_var)
+doc_relatorio_check.grid(row=10, column=3)
+
+doc_transferencia_label = tk.Label(root, text="Título de Eleitor:")
+doc_transferencia_label.grid(row=11, column=2)
+doc_transferencia_var = tk.IntVar()
+doc_transferencia_check = tk.Checkbutton(root, variable=doc_transferencia_var)
+doc_transferencia_check.grid(row=11, column=3)
+
+doc_req_transferencia_label = tk.Label(root, text="Carteira de Vacinação:")
+doc_req_transferencia_label.grid(row=12, column=2)
+doc_req_transferencia_var = tk.IntVar()
+doc_req_transferencia_check = tk.Checkbutton(root, variable=doc_req_transferencia_var)
+doc_req_transferencia_check.grid(row=12, column=3)
+
+doc_decl_matricula_label = tk.Label(root, text="Atestado de Eliminação de Disciplina:")
+doc_decl_matricula_label.grid(row=13, column=2)
+doc_decl_matricula_var = tk.IntVar()
+doc_decl_matricula_check = tk.Checkbutton(root, variable=doc_decl_matricula_var)
+doc_decl_matricula_check.grid(row=13, column=3)
+
+doc_boletim_label = tk.Label(root, text="Declaração de Transferência:")
+doc_boletim_label.grid(row=14, column=2)
+doc_boletim_var = tk.IntVar()
+doc_boletim_check = tk.Checkbutton(root, variable=doc_boletim_var)
+doc_boletim_check.grid(row=14, column=3)
+
+doc_certificado_label = tk.Label(root, text="Certificado de Conclusão:")
+doc_certificado_label.grid(row=15, column=2)
+doc_certificado_var = tk.IntVar()
+doc_certificado_check = tk.Checkbutton(root, variable=doc_certificado_var)
+doc_certificado_check.grid(row=15, column=3)
+
+# Botão de envio
+enviar_button = tk.Button(root, text="Enviar", command=enviar)
+enviar_button.grid(row=23, column=4, columnspan=2)
+
+# Executar a aplicação
+root.mainloop()
+
+
 
 def main_window():
     window = tk.Tk()
     window.title("Sistema de Matrícula")
-    window.geometry("800x600")
+    window.geometry("950x700")
 
     def on_search_click():
         passport = passport_entry.get().strip().upper()
@@ -733,7 +832,7 @@ def main_window():
 
     def on_form_click():
         window.withdraw()  # Esconde a janela principal
-        show_form()  # Exibe a janela do formulário
+        root.deiconify()  # Exibe a janela do formulário
 
     passport_label = tk.Label(window, text="Número do Passaporte:")
     passport_label.pack(pady=10)
@@ -748,7 +847,7 @@ def main_window():
 
     # Carrega e exibe o logotipo
     if os.path.exists("LOGOTIPO_CEEJA.png"):
-        logo = PhotoImage(file="LOGOTIPO_CEEJA.png")
+        logo = tk.PhotoImage(file="LOGOTIPO_CEEJA.png")
         logo_label = tk.Label(window, image=logo)
         logo_label.image = logo  # Mantém uma referência do logo para exibição
         logo_label.pack(pady=10)
